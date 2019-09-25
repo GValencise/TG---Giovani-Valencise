@@ -1,0 +1,114 @@
+%% ---------------------------------------------------------------
+%%              Trabalho de conclusão de curso - Latex
+%%
+%%      UNICAMP - Faculdade de Engenharia Mecânica
+%%       
+%%      2019
+%%		
+%% ---------------------------------------------------------------
+
+%Quando for imprimir, mude os comandos de \clearpage para \cleardoublepage, pois assim quando mandar pra impressora não terá problemas ao imprimir frente e verso (basta apagar \clearpage e habilitar o \cleardoublepage que está como comentário). 
+
+% Especificação da classe do documento
+\documentclass[12pt,twoside]{report}
+%A classe "report" é utilizada para documentos que possuem capitulos, pequenos livros, tese... 
+%"twoside" indica que o documento sera impresso frente e verso. Note que isso não ira comunicar a impressora para imprimir desse modo. 
+
+% Inserção dos pacotes e possíveis comandos a serem utilizados durante a escrita
+\include{meta}
+
+\begin{document}
+% -----------------------------------------------------------------------------
+%                                   ARQUIVOS DA DISSERTAÇÃO
+% -----------------------------------------------------------------------------
+% Capa, prefácio, abstract e afins
+
+\include{pre/pre}
+
+% -----------------------------------------------------------------------------
+%                                   INTRODUÇÃO
+% -----------------------------------------------------------------------------
+\fancyhead[R]{\thepage} %Configuração do cabeçalho
+%\cleardoublepage
+\clearpage
+\setcounter{page}{9} %Essa numeração deve seguir as anteriores. VERIFIQUE!
+
+
+\include{Introducao}
+
+
+% Coloque as figuras dentro da pasta /figs para cada capitulo
+% Todos os capítulos se iniciam em ímpar.
+% -----------------------------------------------------------------------------
+%                                   CAPÍTULO 2
+% -----------------------------------------------------------------------------
+%\clearpage
+% -----------------------------------------------------------------------------
+%                           Capítulo 2 
+% -----------------------------------------------------------------------------
+
+\include{Revisao_Bibliografica}
+
+
+
+%------------------------------------------------------------------------------
+
+
+
+% ---------------------------------------------------------------
+%                                   CAPÍTULO 3
+% ---------------------------------------------------------------
+%\clearpage
+
+
+\include{Materiais_Metodos}
+
+
+% ---------------------------------------------------------------
+%                          REFERÊNCIAS
+% ---------------------------------------------------------------
+\clearpage
+
+
+\bibliographystyle{apalike}         
+\bibliography{referencias}
+
+
+
+% ---------------------------------------------------------------
+%                                            ANEXO
+% ---------------------------------------------------------------
+% %\cleardoublepage
+% \clearpage
+
+% \let\originalanexo=\anexo
+% % \def\anexo{\cleardoublepage\originalanexo}
+% \renewcommand*{\theHsection}{\thepart.\thesection}
+
+% \setcounter{chapter}{0}
+% \def\thechapter{\Alph{chapter}}
+
+% \phantomsection
+% \addcontentsline{toc}{chapter}{ANEXOS}
+% %%% Anexo A
+% \input{anexos/anexos}
+
+% -----------------------------------------------------------------------------
+%                                           APÊNDICE
+% -----------------------------------------------------------------------------
+% %\cleardoublepage 
+% \clearpage
+
+% \let\originalappendix=\appendix
+% % \def\appendix{\cleardoublepage\originalappendix}
+
+% \setcounter{chapter}{0}
+% \def\thechapter{\Alph{chapter}}
+
+% \phantomsection
+% \addcontentsline{toc}{chapter}{APÊNDICES}
+% %%% Apêndice A
+% \input{apendices/apendiceA}     % Usando input fez o "APÊNDICES" apareçer no lugar certo no sumario
+% %%%
+
+\end{document}
