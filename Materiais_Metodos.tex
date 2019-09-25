@@ -179,11 +179,11 @@ proporcionais ao nível de atuação (a), na curva C temos a = 1, na curva D tem
 
 As equações \ref{forcaCE} e \ref{forcaPE} no modelo de Hill demonstram as mesmas propriedades que as mostradas no gráfico \ref{graficos_zajac}. A força produzida pelo elemento PE depende somente do comprimento do músculo, enquanto a força produzida pelo elemento CE depende da $F_max$, do nivel de ativação a (ou $U$ na equação), e das propriedades força-comprimento e força-velocidade. Sendo assim é possível relacionar esses gráficos com aquelas equações estabelecidas anteriormente, sabendo que aqui pode-se determinar $F_max$ utilizando os gráficos C e D, que utilizam o nível de ativação e a velocidade com que o músculo se deforma. Portanto a curva estática do elemento ativo CE tem a amplitude modulada pela relação entre a ativação e a velocidade dada pela curva C, enquanto a curva estática do elemento passivo PE só depende do comprimento do músculo e tem um perfil exponencial.
 
-Uma vez que o projeto será trabalhado no \textit{SIMULINK}, identificou-se uma facilidade em implementar o modelo a partir de uma interpolação das curvas determinadas por \cite{zajac1989muscle}. O \textit{MATLAB} foi utilizado para determinar polinômios capazes de representar de forma desejada as curvas descritas, os polinômios encontrados estão descritos em \ref{#1}
+Uma vez que o projeto será trabalhado no \textit{SIMULINK}, identificou-se uma facilidade em implementar o modelo a partir de uma interpolação das curvas determinadas por \cite{zajac1989muscle}. O \textit{MATLAB} foi utilizado para determinar polinômios capazes de representar de forma desejada as curvas descritas, os polinômios encontrados estão descritos em \ref{funcCE}, \ref{funcPE}, \ref{funcFM} e \ref{funcFMax}
 
-\begin{align}
-F_{CE} = -0,8606x^5 + 12,39x^4 - 38,49x^3 + 43,6x^2 - 17,51x + 1,88 \label{funcCE} \\
-F_{PE} = 8,13x^4 - 19x^3 + 15,07x^2 - 4,493x +0,3338 \label{funcPE}
-F^M = F_{CE} + F_{PE} \label{funcFM}
-F_{max} = 0,06757x^7 - 0,04067x^6 - 0,5223x^5 + 0,2424x^4 + 1,387x^3 - 0,4223x^2 - 1,844x + 1,12 \label{funcFMax}
-\end{align}
+\begin{gather}
+F_{CE} = -0,8606x^5+12,39x^4-38,49x^3+43,6x^2-17,51x+1,88 \label{funcCE} \\
+F_{PE} = 8,13x^4-19x^3+15,07x^2-4,493x+0,3338 \label{funcPE} \\
+F^M = F_{CE}+F_{PE} \label{funcFM} \\
+\medmath{F_{max}}=\medmath{0,06757x^7-0,04067x^6-0,5223x^5+ 0,2424x^4+1,387x^3-0,4223x^2-1,844x+1,12} \label{funcFMax}
+\end{gather}
