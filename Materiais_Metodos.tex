@@ -91,6 +91,7 @@ O polegar possui 3 juntas, sendo duas diretivas e uma flexiva, configurando 5 GL
 \end{figure}
 
 \subsection{Simulação da Mão}
+\label{simulacao_mao}
 Neste projeto a simulação da mão é implementada utilizando uma toolbox do \textit{MATLAB} de código open source do proprietário Peter Corke \cite{corke1996robotics}, a "Robotics Toolbox for MATLAB". Com o uso desta toolbox é necessário implementar as matrizes de DH, que definirão os chamados \textit{Links} e ao unir-los, criando um \textit{SerialLink}, podemos definir as posições espaciais dos dedos utilizando a cinemática direta, ou seja, passando como parâmetros os ângulos de cada junta. Os ângulos de cada junta por sua vez são obtidos do modelo de Hill \cite{hill1938heat} que estão explicados com mais detalhes na seção \ref{modelagem_antebraco}. 
 
 É possível criar uma visão de alto nível de como a modelagem cinemática da mão, e assim sua simulação, interage diretamente com a modelagem dos músculos do antebraço, e portanto o modelo de Hill, como na imagem \ref{IntegracaoAltoNivel}
@@ -102,7 +103,7 @@ Neste projeto a simulação da mão é implementada utilizando uma toolbox do \t
 \label{IntegracaoAltoNivel}
 \end{figure}
 
-A implementação dos dedos neste projeto é, como apresentado na cinemática da mão, separada na cinemática do polegar e a cinemática dos demais dedos da mão.Para isto são utilizadas as matrizes de DH obtidas na seção \ref{cinematica_direta_mao}. Os referenciais do plano cartesiano são como os mostrados nas imagens \ref{JuntasResto} e \ref{JuntasPolegar}, tomando como base referencial a primeira junta, a que está na base da falange. Como é um modelo tridimensional, os ângulos das juntas permitem, com base nas restrições da seção \ref{anatomia_mao} descrever a posição dos dedos no espaço.
+A implementação dos dedos neste projeto é, como apresentado na cinemática da mão, separada na cinemática do polegar e a cinemática dos demais dedos da mão. Para isto são utilizadas as matrizes de DH obtidas na seção \ref{cinematica_direta_mao}. Os referenciais do plano cartesiano são como os mostrados nas imagens \ref{JuntasResto} e \ref{JuntasPolegar}, tomando como base referencial a primeira junta, a que está na base da falange. Como é um modelo tridimensional, os ângulos das juntas permitem, com base nas restrições da seção \ref{anatomia_mao} descrever a posição dos dedos no espaço.
 
 Dentre os parâmetros de DH, estão os parâmetros dados pela letra l que são, basicamente, as distâncias entre as juntas, e os parâmetros $\theta$ que definem a angulação da junta. Logo, para cada separação podemos definir de antemão os parâmetros estáticos (l) com base em medições realizadas sobre seres humanos comuns.
 
@@ -136,10 +137,10 @@ Uma vez utilizados os parâmetros definidos, é possível utilizando as matrizes
 
 \section{Modelagem dos Músculos do Antebraço}
 \label{modelagem_antebraco}
-Para simular o comportamento dos dedos, como descrito na imagem \ref{IntegracaoAltoNivel}, é necessário que sejam determinados os ângulos das juntas. Estes ângulos são determinados a partir da força produzida pelos músculos como é descrito no modelo de Hill na seção \ref{propriedades_musculo}. Para este projeto usa-se um modelo mais simplificado da relação $flv$ do que as relações descritas por \cite{rosen1999performances}, este modelo aproxima-se mais do modelo descrito por \cite{zajac1989muscle} e \cite{durfee1994estimation} em que o elemento SE pode ser desconsiderado assumindo ser infinitamente rígido, para fins de simplificação, já que a maior parte da força é gerada nos elementos CE e PE. Ao definir as curvas utilizadas no modelo podemos fazer de forma normalizada para que as variações nas medidas possam ser consideradas como ganhos simples.Para que haja adequação dos valores foram utilizados parâmetros encontrados em \cite{lemay1996dynamic}, os quais serão utilizados para determinar os valores dos ângulos das juntas.
+Para simular o comportamento dos dedos, como descrito na imagem \ref{IntegracaoAltoNivel}, é necessário que sejam determinados os ângulos das juntas. Estes ângulos são determinados a partir da força produzida pelos músculos como é descrito no modelo de Hill na seção \ref{propriedades_musculo}. Para este projeto usa-se um modelo mais simplificado da relação $flv$ do que as relações descritas por \cite{rosen1999performances}, este modelo aproxima-se mais do modelo descrito por \cite{zajac1989muscle} e \cite{durfee1994estimation} em que o elemento SE pode ser desconsiderado assumindo ser infinitamente rígido, para fins de simplificação, já que a maior parte da força é gerada nos elementos CE e PE. Ao definir as curvas utilizadas no modelo podemos fazer de forma normalizada para que as variações nas medidas possam ser consideradas como ganhos simples. Para que haja adequação dos valores foram utilizados parâmetros encontrados em \cite{lemay1996dynamic}, os quais serão utilizados para determinar os valores dos ângulos das juntas.
 
 \subsection{Músculos Utilizados}
-É preciso determinar quais músculos serão tratados no problema, sabendo que cada músculo é responsável pelo movimento de uma, ou mais falanges. A partir da cinemática da mão proposta neste projeto 3 falanges serão movimentadas, as falanges próximas, as falanges médias e as falanges distais, sendo cada uma delas atrelada a uma junta, MP, PIP e DIP. Como simplificação do projeto é modelado que o movimento de avanço e recuo é realizado por músculos diferentes, apesar de agirem sobre a mesma falange e junta. 
+É preciso determinar quais músculos serão tratados no problema, sabendo que cada músculo é responsável pelo movimento de uma, ou mais falanges. A partir da cinemática da mão proposta neste projeto 3 falanges serão movimentadas, as falanges próximas, as falanges médias e as falanges distais, sendo cada uma delas atrelada a uma junta, MP, PIP e DIP respectivamente. Para simplificação do modelo o movimento de avanço e recuo é realizado por músculos diferentes, apesar de agirem sobre a mesma falange e junta. 
 
 Como descrito na restrição tipo 2 da seção \ref{anatomia_mao} a movimentação da falange distal é atrelada a movimentação da falange média, sendo definida pelo ângulo das juntas DIP e PIP. Logo são necessários 2 músculos para controlar os movimentos das juntas de flexão, e 4 músculos para os movimentos das juntas diretivas. Para efeitos de simplificação, o comprimento dos músculos de recuo tem o mesmo comprimento que os músculos de avanço, removendo assim a necessidade de se calcular mais parâmetros que não afetaram de forma expressiva a proposta deste projeto. Dada a imagem \ref{modelo_durfee} podemos notar que a força produzida por uma unidade muscular pode ser considerada de avanço ou recuo determinando o sinal de saída, logo podemos conectar ao modelo as forças dos músculos de avanço e recuo apenas alterando o sinal de saída de um tipo de músculo, aqui utilizaremos o sinal negativo para músculos de recuo.
 
@@ -155,9 +156,9 @@ Como descrito na restrição tipo 2 da seção \ref{anatomia_mao} a movimentaç�
 \subsection{Forças de um Músculo a Partir de um Modelo Simplificado}
 Como definido anteriormente, um modelo mais simplificado para se calcular a força líquida produzida por uma unidade motora pode ser descrito como em \cite{zajac1989muscle} onde a força é um resultado das propriedades força-comprimento e da força-velocidade, que estão dentro da dinâmica de contração. Em nosso modelo a entrada será a ativação dos elementos contráteis e a saída será a força produzida pela unidade motora, que pode ser extrapolada para um músculo inteiro.
 
-O trabalho de \cite{zajac1989muscle} apresenta gráficos que definem o comportamento da força muscular $F^M$ em relação ao comprimento $l$ e a velocidade em que o músculo se deforma $v_m$. 
+O trabalho de \cite{zajac1989muscle} apresenta gráficos que definem o comportamento da força muscular $F^M$(na seção \ref{propriedades_musculo} estava denotado como $F_m$) em relação ao comprimento $l$ e a velocidade em que o músculo se deforma $v_m$. 
 
-Os gráficos A e B definem uma propriedade estática do músculo e eles podem ser estudados quando o comprimento $L^M$ do músculo e o nível de ativação $a(t)$ são constantes. Uma ativação igual a 1 é considerada máxima quando os elementos contráteis do músculo forem excitados de forma máxima por muito tempo, ou seja, sem considerar mais o período transiente. Contrariamente um músculo é definido em repouso quando seu nível de ativação é 0, ou seja, inativo por muito tempo. A força identificada nos gráficos A e B é nomeada de força muscular ativa e esta força é gerada (nominalmente) entre $0,5{L_o}^M < L^M < 1,5{L_o}^M$, sendo ${L_o}^M$ o comprimento onde a força tem um pico (${F_o}^M$) \cite{zajac1989muscle}. Uma comparação entre os gráficos A e B mostra que músculos parcialmente ativados preservam as mesmas características que os músculos totalmente ativados.
+Analisando a figura \ref{graficos_zajac}, os gráficos A e B definem uma propriedade estática do músculo e eles podem ser estudados quando o comprimento $L^M$ do músculo e o nível de ativação $a(t)$ são constantes. Uma ativação igual a 1 é considerada máxima quando os elementos contráteis do músculo forem excitados de forma máxima por muito tempo, ou seja, sem considerar mais o período transiente. Contrariamente, um músculo é definido em repouso quando seu nível de ativação é 0, ou seja, inativo por muito tempo. A força identificada nos gráficos A e B é nomeada de força muscular ativa e esta força é gerada (nominalmente) entre $0,5{L_o}^M < L^M < 1,5{L_o}^M$, sendo ${L_o}^M$ o comprimento onde a força tem um pico (${F_o}^M$) \cite{zajac1989muscle}. Uma comparação entre os gráficos A e B mostra que músculos parcialmente ativados preservam as mesmas características que os músculos totalmente ativados.
 
 Os gráficos C e D definem a propriedade da força-velocidade nos músculos. Quando um músculo é exposto a ativação máxima, ele fica sujeito a uma tensão constante, diminui e então para. O comprimento em que o músculo para então determina o comprimento no qual o músculo aguenta tal tensão no estado estático sob ativação máxima. Então os gráficos C e D podem ser utilizados para qualquer $L^M$ onde $0,5{L_o}^M < L^M < 1,5{L_o}^M$ \cite{zajac1989muscle}. Podemos retirar destes gráficos, então, qual a força $F^M$ que será exercida pelo músculo 
 
@@ -177,13 +178,82 @@ proporcionais ao nível de atuação (a), na curva C temos a = 1, na curva D tem
 \label{graficos_zajac}
 \end{figure}
 
-As equações \ref{forcaCE} e \ref{forcaPE} no modelo de Hill demonstram as mesmas propriedades que as mostradas no gráfico \ref{graficos_zajac}. A força produzida pelo elemento PE depende somente do comprimento do músculo, enquanto a força produzida pelo elemento CE depende da $F_max$, do nivel de ativação a (ou $U$ na equação), e das propriedades força-comprimento e força-velocidade. Sendo assim é possível relacionar esses gráficos com aquelas equações estabelecidas anteriormente, sabendo que aqui pode-se determinar $F_max$ utilizando os gráficos C e D, que utilizam o nível de ativação e a velocidade com que o músculo se deforma. Portanto a curva estática do elemento ativo CE tem a amplitude modulada pela relação entre a ativação e a velocidade dada pela curva C, enquanto a curva estática do elemento passivo PE só depende do comprimento do músculo e tem um perfil exponencial.
+As equações \ref{forcaCE} e \ref{forcaPE} no modelo de Hill demonstram as mesmas propriedades que as mostradas no gráfico \ref{graficos_zajac}. A força produzida pelo elemento PE depende somente do comprimento do músculo, enquanto a força produzida pelo elemento CE depende da $F_{max}$, do nivel de ativação $a$ (ou $U$ na equação), e das propriedades força-comprimento e força-velocidade. Então pode-se determinar $F_{max}$ utilizando os gráficos C e D, que utilizam o nível de ativação e a velocidade com que o músculo se deforma. A curva estática do elemento ativo CE tem a amplitude modulada pela relação entre a ativação e a velocidade do músculo (dada pela curva C), enquanto a curva estática do elemento passivo PE só depende do comprimento do músculo e tem um perfil exponencial.
 
-Uma vez que o projeto será trabalhado no \textit{SIMULINK}, identificou-se uma facilidade em implementar o modelo a partir de uma interpolação das curvas determinadas por \cite{zajac1989muscle}. O \textit{MATLAB} foi utilizado para determinar polinômios capazes de representar de forma desejada as curvas descritas, os polinômios encontrados estão descritos em \ref{funcCE}, \ref{funcPE}, \ref{funcFM} e \ref{funcFMax}
+Uma vez que o projeto será simulado no \textit{SIMULINK}, identificou-se uma facilidade em implementar o modelo a partir de uma interpolação das curvas determinadas por \cite{zajac1989muscle}. O \textit{MATLAB} foi utilizado para determinar polinômios capazes de representar de forma desejada as curvas do elemento CE, elemento PE e força-velocidade. Os polinômios encontrados estão descritos em \ref{funcCE}, \ref{funcPE}, \ref{funcFM} e \ref{funcFMax}. Para a interpolação foram utilizadas, como parâmetros de comparação, as curvas encontradas em \cite{gulch1994force},\cite{wilkie1949relation},\cite{edman1976non} e \cite{SCOTT1991163}.
 
 \begin{gather}
-F_{CE} = -0,8606x^5+12,39x^4-38,49x^3+43,6x^2-17,51x+1,88 \label{funcCE} \\
-F_{PE} = 8,13x^4-19x^3+15,07x^2-4,493x+0,3338 \label{funcPE} \\
+F_{CE} = -1,0404x^5+13,35029x^4-40,4822x^3+45,6095x^2-18,4992x+2,0705 \label{funcCE} \\
+F_{PE} = 2,2836x^4-6,1002x^3+5,9683x^2-2,5391x+0,3972 \label{funcPE} \\
 F^M = F_{CE}+F_{PE} \label{funcFM} \\
-\medmath{F_{max}}=\medmath{0,06757x^7-0,04067x^6-0,5223x^5+ 0,2424x^4+1,387x^3-0,4223x^2-1,844x+1,12} \label{funcFMax}
+\medmath{F_{max}}=\medmath{-0,074x^7+0,715x^6-1,137x^5- 0,862x^4+2,457x^3-0,015x^2-2,146x+1,096} \label{funcFMax}
 \end{gather}
+
+Uma vez que os polinômios foram determinados é possível analisar se estes representam de forma fiel as curvas descritas por \cite{zajac1989muscle}. As curvas obitdas são comparáveis aos gráficos de máximo nível de atuação do músculo ($a(t)=1$) e estão normalizadas pela força máxima na vertical, velocidade máxima na horizontal (força-velocidade) e comprimento ótimo na horizontal(força-comprimento). 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/forcas_elementos.png}
+\caption[Forças dos Elementos CE e PE]{Forças dos elementos CE e PE dados pelos polinômios \ref{funcCE},\ref{funcPE} e \ref{funcFM}}
+\label{graficos_forcas_elementos}
+\end{figure}
+
+Espera-se o mesmo para o polinômio \ref{funcFMax}, comparado a curva C de \cite{zajac1989muscle}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.75\textwidth]{img/forca_velocidade.png}
+\caption[Relação Fmax e Velocidade do Músculo]{Força máxima dada pelo polinômios \ref{funcFMax}}
+\label{graficos_forcas_elementos}
+\end{figure}
+
+Comparando as curvas obtidas pelos polinômios com as curvas descritas por \cite{zajac1989muscle} pode-se inferir que os polinômios adotados estão adequados para uso no sistema.
+
+Determinado como os elementos da unidade motora devem se comportar em relação aos inputs, é necessário um modelo que possibilite a transformação da soma das forças ($F_{CE}$ e $F_{PE}$) em momentos e ângulos das juntas. \cite{giat1994simulation} e \cite{rosen1999performances} demonstram como a geometria músculo-tendão está relacionada ao movimento angular de um determinado membro do corpo humano, \cite{feng1999surface} e \cite{winters1988estimated} esquematizaram o básico de uma geometria da articulação muscular demonstrado na figura \ref{geometria_articulacao}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.5\textwidth]{img/Winters_Geometria.JPG}
+\caption[Esquema da Geometria da Articulação Muscular]{Esquemático básico de uma geometria de articulação muscular, definindo tamanhos e mostrando duas possibilidades de trajetória para um músculo que cruza uma articulação\cite{winters1988estimated}}
+\label{geometria_articulacao}
+\end{figure}
+
+ \cite{feng1999surface} define que os ângulos de uma junta podem ser definidos por um modelo de blocos representado na figura \ref{modelo_feng}, onde uma excitação muscular vinda do sistema nervoso é trabalhada na dinâmica músculo-tendínea, assim como representado pelos gráficos de \cite{zajac1989muscle}, e então a força produzida pelas unidades motoras se convertem em torques devido a geometria das articulações, enquanto suas dinâmicas possibilitam obter o ângulo, a velocidade e aceleração da junta. O modelo levantado por \cite{feng1999surface} está alinhado ao modelo utilizado por \cite{rosen1999performances} (representado na figura \ref{modelo_rosen})
+ 
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/Feng_Modelo.JPG}
+\caption[Modelo de Blocos para Obtenção do Ângulo das Articulações - Feng]{Um diagrama de blocos do modelo músculo-esquelético. A excitação do músculo é vinda do sistema nervoso e manifestada em seus eletromiogramas(EMGs). A superfície processada EMGs foi convertida em ativação para o músculo. As forças desenvolvidas pelos músculos e transmitidas para os tendões dependem de propriedades dinâmicas integradas entre os músculos e os tendões (dinâmica músculo-tendínea) e dos ângulos das articulações e velocidades. Os torques dependem linearmente das forças e dos momentos do músculo, os quais dependem do ângulo das articulações. O torque causa mudanças na cinemática das articulações.\cite{feng1999surface}}
+\label{modelo_feng}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/Rosend_Modelo.JPG}
+\caption[Modelo de Blocos para Obtenção do Ângulo das Articulações - Rosen]{Os momentos das unidades motoras dependem das entradas: nível de ativação(U) e ângulo da articulação($\theta_j$)\cite{rosen1999performances}}
+\label{modelo_rosen}
+\end{figure}
+
+Tendo como base estes modelos, é possível implementar uma simulação que tenha como entradas o sinal de ativação muscular U e, a partir de retro-alimentação, a velocidade de encurtamento dos músculos e seu tamanho, estes dois últimos são calculados a partir da geometria da articulação muscular e o momento obtido das forças musculares. Um modelo de blocos pode ser implementado no \textit{SIMULINK}, ferramenta do \textit{MATLAB}, como mostrado na figura \ref{modelo_simulink}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/Modelo_Unidade.JPG}
+\caption[Modelo de Blocos para Obtenção do Ângulo das Articulações - Simulink]{Diagrama de blocos para implementação do modelo de Hill em uma unidade motora}
+\label{modelo_simulink}
+\end{figure}
+
+Fazendo uma alusão ao modelo proposto por \cite{feng1999surface}, no modelo do \textit{SIMULINK} da figura \ref{modelo_simulink} a geometria da articulação é representada pela constante \textit{Muscle Joint Geometry}(MJG) e a dinâmica da articulação é representada pela função de transferência. Como descrito na seção \ref{anatomia_mao} a mão possui diversas restrições e estas devem se traduzir no modelo como saturações e limitações. A função de transferência foi obtida empiricamente, com base nos estudos de \cite{zajac1989muscle} e \cite{rosen1999performances}, e ela necessita de um amortecimento para que a energia do sistema se dissipe, garantindo uma estabilidade no regime estacionário. No modelo proposto temos a entrada U, que representa o nível de atuação sobre o músculo, e como entradas dos polinômios obtidos nas equações \ref{funcCE} - \ref{funcFMax} estão a velocidade e o comprimento do músculo, relacionados pelos parâmetros de força-velocidade e força-comprimento do músculo \cite{zajac1989muscle}. Nos blocos "Poly" estão os polinômios obtidos e como no modelo de \cite{durfee1994estimation} a força da unidade motora é uma soma entre a força do elemento CE e do elemento PE.
+
+\subsection{Integração e Validação do Modelo}
+
+Este modelo prevê a atuação de uma unidade motora, e como dito anteriormente neste projeto iremos assumir que dois músculos são utilizados no movimento de cada articulação em um GL, um com a função de avanço e outro com a função de recuo. Isto será traduzido como uma replicação do modelo da unidade motora, invertendo o sinal de saída do momento para o músculo de recuo e somando ao sinal do momento do músculo de avanço, assim gerando um momento resultante que irá governar o movimento do dedo ao determinar os ângulos das juntas. Na figura \ref{modelo_simulink_macro} está uma visão mais geral de como o sistema deve estar ligado, ambos os músculos utilizando o mesmo bloco de modelo de Hill, porém o momento de saída do músculo de recuso é negativo em relação ao momento de saída do músculo de avanço.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/Modelo_2Unidades.JPG}
+\caption[Modelo de Avanço e Recuo - Simulink]{Diagrama de blocos para implementação de avanço e recuo nos músculos}
+\label{modelo_simulink_macro}
+\end{figure}
+
+Existe um nível de atuação para cada músculo pois neste projeto a atuação dos músculos é feita em etapas de avanço e recuo, logo iremos seguir um fluxo de repouso, flexão, extensão para todas as juntas dos dedos (MP, PIP e DIP), a fim de mostrar passo a passo a movimentação do dedo. A partir deste modelo obtemos os ângulos das articulações que são utilizados na simulação da mão humana como inputs para o modelo cinemático da mão nas matrizes de DH, como descrito na seção \ref{simulacao_mao}. 
