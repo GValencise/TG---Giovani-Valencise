@@ -8,7 +8,7 @@
 \label{cinematica_direta_mao}
 A partir do conjunto de restrições apresentado em \ref{anatomia_mao}, passamos a ter um modelo com 15 GL \cite{lin2000modeling}. E pode-se obter a cinemática direta, com o objetivo de calcular a posição e orientação da ponta do dedo a partir dos ângulos das juntas. A cinemática da mão pode ser subdividida em dois conjuntos: cinemática do polegar e cinemática dos dedos restantes. A cinemática direta é obtida por meio das matrizes de parâmetros de Denavit-Hartenberg (DH) \cite{hartenberg1964kinematic}, estas são frequentemente utilizadas em modelagem de braços robóticos \cite{cobos2008efficient}.
 
-A transformação de Denavit-Hartenberg é a mais utilizada para representação cinemática de juntas concatenadas. Ela é baseada na transformação entre juntas sucessivas, e estas expressas por 3 parâmetros fixos e um variável (dependente do tipo de junta) \cite{newman2000calibration}. Os parâmetros de DH que, portanto, descrevem as juntas são: $a_i$, que representa o comprimento da conexão entre duas juntas; $\alpha_i$, que representa a rotação entre uma junta e o sua sucessiva dado o eixo de ação da junta; $d_i$, que representa \textit{offset} da junta, ou seja, a distância de uma junta até a próxima ao longo do eixo de ação de i; e $\theta_i$, que representa o ângulo de uma junta, ou seja, a rotação de uma junta em relação a próxima sobre o eixo de ação de i. Os parâmetros $a_i$ e $\alpha_i$ são os parâmetros que definem a posição relativa de duas juntas no espaço, enquanto os parâmetros $d_i$ e $\theta_i$ são os parâmetros variáveis, que definem o tipo da junta\cite{corke2007simple}.
+A transformação de Denavit-Hartenberg é a mais utilizada para representação cinemática de juntas concatenadas. Ela é baseada na transformação entre juntas sucessivas, e estas expressas por 3 parâmetros fixos e um variável (dependente do tipo de junta) \cite{newman2000calibration}. Os parâmetros de DH que, portanto, descrevem as juntas são: $a_i$, que representa o comprimento da conexão entre duas juntas; $\alpha_i$, que representa a rotação entre uma junta e a sua sucessiva dado o eixo de ação da junta; $d_i$, que representa \textit{offset} da junta, ou seja, a distância de uma junta até a próxima ao longo do eixo de ação de i; e $\theta_i$, que representa o ângulo de uma junta, ou seja, a rotação de uma junta em relação a próxima sobre o eixo de ação de i. Os parâmetros $a_i$ e $\alpha_i$ são os parâmetros que definem a posição relativa de duas juntas no espaço, enquanto os parâmetros $d_i$ e $\theta_i$ são os parâmetros variáveis, que definem o tipo da junta\cite{corke2007simple}.
 
 A representação de DH é feita, portanto, por matrizes de transformação, as quais relacionam as coordenadas de uma junta i em relação a base do sistema por meio de:
 
@@ -43,11 +43,10 @@ Sem considerar o osso metacarpo, que é o osso que faz a ligação dos dedos com
 \begin{tabular}{|c|c|c|c|c|}
 	\hline
     Juntas & a & $\alpha$ & d & $\theta$ \\ \hline
-    1 & 0 & $0^\circ$ & 0 & $\theta_1$ \\ \hline
-    2 & 0 & $-90^\circ$ & 0 & $\theta_2$ \\ \hline
-    3 & $l_1$ & $0^\circ$ & 0 & $\theta_3$ \\ \hline
-    4 & $l_2$ & $0^\circ$ & 0 & $\theta_4$ \\ \hline
-    5 & $l_3$ & $0^\circ$ & 0 & $\theta_5$ \\
+    1 & 0 & $-90^\circ$ & 0 & $\theta_1$ \\ \hline
+    2 & $l_1$ & $0^\circ$ & 0 & $\theta_2$ \\ \hline
+    3 & $l_2$ & $0^\circ$ & 0 & $\theta_3$ \\ \hline
+    4 & $l_3$ & $0^\circ$ & 0 & $\theta_4$ \\
 	\hline
 \end{tabular}
 \end{table}
@@ -63,7 +62,7 @@ Sem considerar o osso metacarpo, que é o osso que faz a ligação dos dedos com
 
 
 \subsubsection{Dedo Polegar}
-O polegar possui 3 juntas, sendo duas diretivas e uma flexiva, configurando 5 GL \cite{lee1995model}, e 3 ossos. A tabela \ref{DHPolegar} mostra os parâmetros da matriz de DH e a figura \ref{JuntasPolegar} mostra a configuração das juntas para determinação dos parâmetros de DH. A configuração para a construção do polegar prevê \textit{offsets} para as rotações de coordenadas das juntas, como na junta 4 e 5.
+O polegar possui 3 juntas, sendo duas diretivas e uma flexiva, configurando 5 GL \cite{lee1995model}, e 3 ossos. A tabela \ref{DHPolegar} mostra os parâmetros da matriz de DH e a figura \ref{JuntasPolegar} mostra a configuração das juntas para determinação dos parâmetros de DH. A configuração para a construção do polegar prevê \textit{offsets} para as rotações de coordenadas das juntas, como na junta 3 e 4.
 
 \begin{table}[H]
 \centering
@@ -72,19 +71,18 @@ O polegar possui 3 juntas, sendo duas diretivas e uma flexiva, configurando 5 GL
 \begin{tabular}{|c|c|c|c|c|}
 	\hline
     Juntas & a & $\alpha$ & d & $\theta$ \\ \hline
-    1 & 0 & $0^\circ$ & 0 & $\theta_1$ \\ \hline
-    2 & 0 & $90^\circ$ & 0 & $\theta_2$ \\ \hline
-    3 & 0 & $0^\circ$ & $l_1$ & $\theta_3$ \\ \hline
-    4 & 0 & $90^\circ$ & 0 & $\theta_4 + \frac{\pi}{2}$  \\ \hline
-    5 & -$l_2$ & $0^\circ$ & 0 & $\theta_5 - \frac{\pi}{2}$ \\ \hline
-    6 & -$l_3$ & $0^\circ$ & 0 & $\theta_6$ \\
+    1 & 0 & $90^\circ$ & 0 & $\theta_1$ \\ \hline
+    2 & 0 & $0^\circ$ & $l_1$ & $\theta_2$ \\ \hline
+    3 & 0 & $90^\circ$ & 0 & $\theta_3 + \frac{\pi}{2}$  \\ \hline
+    4 & -$l_2$ & $0^\circ$ & 0 & $\theta_4 - \frac{\pi}{2}$ \\ \hline
+    5 & -$l_3$ & $0^\circ$ & 0 & $\theta_5$ \\
 	\hline
 \end{tabular}
 \end{table}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width = 1\textwidth]{img/Polegar.JPG}
+\includegraphics[width = 1\textwidth]{img/Polegartotal.png}
 \includegraphics[width = 0.65\textwidth]{img/Polegar1.JPG}
 \caption[Representação do dedo polegar como um manipulador robótico]{Representação do dedo polegar como um manipulador robótico utilizando o toolbox do \textit{MATLAB} \cite{corke1996robotics}}
 \label{JuntasPolegar}
@@ -154,6 +152,7 @@ Como descrito na restrição tipo 2 da seção \ref{anatomia_mao} a movimentaç�
 
 
 \subsection{Forças de um Músculo a Partir de um Modelo Simplificado}
+\label{forcas_modelo_simplificado}
 Como definido anteriormente, um modelo mais simplificado para se calcular a força líquida produzida por uma unidade motora pode ser descrito como em \cite{zajac1989muscle} onde a força é um resultado das propriedades força-comprimento e da força-velocidade, que estão dentro da dinâmica de contração. Em nosso modelo a entrada será a ativação dos elementos contráteis e a saída será a força produzida pela unidade motora, que pode ser extrapolada para um músculo inteiro.
 
 O trabalho de \cite{zajac1989muscle} apresenta gráficos que definem o comportamento da força muscular $F^M$(na seção \ref{propriedades_musculo} estava denotado como $F_m$) em relação ao comprimento $l$ e a velocidade em que o músculo se deforma $v_m$. 
@@ -202,7 +201,7 @@ Espera-se o mesmo para o polinômio \ref{funcFMax}, comparado a curva C de \cite
 
 \begin{figure}[H]
 \centering
-\includegraphics[width = 0.75\textwidth]{img/forca_velocidade.png}
+\includegraphics[width = 1\textwidth]{img/forca_velocidade.png}
 \caption[Relação Fmax e Velocidade do Músculo]{Força máxima dada pelo polinômios \ref{funcFMax}}
 \label{graficos_forcas_elementos}
 \end{figure}
@@ -246,7 +245,7 @@ Tendo como base estes modelos, é possível implementar uma simulação que tenh
 Fazendo uma alusão ao modelo proposto por \cite{feng1999surface}, no modelo do \textit{SIMULINK} da figura \ref{modelo_simulink} a geometria da articulação é representada pela constante \textit{Muscle Joint Geometry}(MJG) e a dinâmica da articulação é representada pela função de transferência. Como descrito na seção \ref{anatomia_mao} a mão possui diversas restrições e estas devem se traduzir no modelo como saturações e limitações. A função de transferência foi obtida empiricamente, com base nos estudos de \cite{zajac1989muscle} e \cite{rosen1999performances}, e ela necessita de um amortecimento para que a energia do sistema se dissipe, garantindo uma estabilidade no regime estacionário. No modelo proposto temos a entrada U, que representa o nível de atuação sobre o músculo, e como entradas dos polinômios obtidos nas equações \ref{funcCE} - \ref{funcFMax} estão a velocidade e o comprimento do músculo, relacionados pelos parâmetros de força-velocidade e força-comprimento do músculo \cite{zajac1989muscle}. Nos blocos "Poly" estão os polinômios obtidos e como no modelo de \cite{durfee1994estimation} a força da unidade motora é uma soma entre a força do elemento CE e do elemento PE.
 
 \subsection{Integração e Validação do Modelo}
-
+\label{integracao_validacao}
 Este modelo prevê a atuação de uma unidade motora, e como dito anteriormente neste projeto iremos assumir que dois músculos são utilizados no movimento de cada articulação em um GL, um com a função de avanço e outro com a função de recuo. Isto será traduzido como uma replicação do modelo da unidade motora, invertendo o sinal de saída do momento para o músculo de recuo e somando ao sinal do momento do músculo de avanço, assim gerando um momento resultante que irá governar o movimento do dedo ao determinar os ângulos das juntas. Na figura \ref{modelo_simulink_macro} está uma visão mais geral de como o sistema deve estar ligado, ambos os músculos utilizando o mesmo bloco de modelo de Hill, porém o momento de saída do músculo de recuso é negativo em relação ao momento de saída do músculo de avanço.
 
 \begin{figure}[H]
