@@ -81,6 +81,12 @@ Para validar a restrição da angulação entre as juntas PIP e DIP foi simulado
 \label{sim_pip}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/posicoes_pip.png}
+\caption[Posições das Juntas em Função do Tempo - Simulação de entrada para a junta PIP]{Posições das Juntas em Função do Tempo - Simulação de entrada para a junta PIP}
+\end{figure}
+
 O mesmo é feito para a junta MP, onde foram aplicados os ângulos de entrada para os músculos de flexão e abudção/adução descritos na figura \ref{ang_sim_mp}. A resposta para esta entrada está na figura \ref{sim_mp}, onde é possível notar a movimentação das duas juntas e como o dedo se comporta quando estes músculos estão sobre força. Lembra-se que o ângulo de adução/abdução da junta MP é limitado em um range de $-15^\circ$ à $15^\circ$, por isso sua variação angular é pequena perto do ângulo de flexão. Os ângulos para esta simulação foram retirados de medição empírica sobre dedos de algumas pessoas.
 
 \begin{figure}[H]
@@ -97,6 +103,12 @@ O mesmo é feito para a junta MP, onde foram aplicados os ângulos de entrada pa
 \label{sim_mp}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/posicoes_mp.png}
+\caption[Posições das Juntas em Função do Tempo - Simulação de entrada para a junta MP]{Posições das Juntas em Função do Tempo - Simulação de entrada para a junta MP}
+\end{figure}
+
 E por fim, uma simulação de todas as juntas estimuladas, demonstrando que as matrizes de DH representam bem o movimento de um dedo para as entradas da figura \ref{ang_sim_DH}. A figura \ref{sim_DH} representa a movimentação do dedo quando a entrada é a da figura \ref{ang_sim_DH}.
 
 \begin{figure}[H]
@@ -111,6 +123,13 @@ E por fim, uma simulação de todas as juntas estimuladas, demonstrando que as m
 \includegraphics[width = 1\textwidth]{img/sim_total.png}
 \caption[Simulação de entrada para todas as juntas]{Simulação de entrada para todas as juntas}
 \label{sim_DH}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/todas_juntas.png}
+\caption[Posições das Juntas em Função do Tempo - Simulação de entrada para as juntas]{Posições das Juntas em Função do Tempo - Simulação de entrada para as juntas}
+\label{ang_sim_DH}
 \end{figure}
 
 \section{Modelagem da Ativação Muscular}
@@ -175,7 +194,82 @@ Com um movimento completo de flexão e extensão, é possível correlacionar as 
 \label{rosen_ativacao}
 \end{figure}
 
-\section{Simulação do Movimento Completo}
+\section{Simulação do Movimento}
 \label{resultado_simulacao}
+Para uma validação do modelo completo é necessário que se faça a composição das duas validações anteriores, sendo assim nesta seção foi feita a simulação dos dedos da mão humana levando em consideração inputs como os da seção \ref{resultado_ativacao}. O modelo desenvolvido neste projeto é normalizado, portanto aqui pode-se simular o dedo polegar e os outros dedos da mão sem perder a coerência das validações. Sabendo disso, nesta seção é feita a simulação parcial do dedo, onde apenas uma junta é estimulada (descrita na tabela \ref{tabela_seq_uma} e a simulação completa do dedo onde é feita então a simulação de duas sequências de movimentos compostas por movimentos de flexão e extensão como previsto na seção \ref{integracao_validacao}, as duas sequências estão demonstradas na tabela \ref{tabela_sequencia_movimentos}.
+
+\begin{table}[H]
+\centering
+\caption{Tabela das Sequências de Movimentos para uma Junta}
+\label{tabela_seq_uma}
+\begin{tabular}{|c|c|}
+	\hline
+    \# & Sequência \\ \hline
+    1 & $f_{PIP} -> e_{PIP}$ \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Tabela das Sequências de Movimentos para Todas as Juntas}
+\label{tabela_sequencia_movimentos}
+\begin{tabular}{|c|c|}
+	\hline
+    \# & Sequência \\ \hline
+    1 & $f_{PIP} -> e_{PIP} -> f_{MP_{F}} -> e_{MP_{F}} -> f_{MP_{AA}} -> e_{MP_{AA}}$  \\ \hline
+    2 & $f_{PIP} -> f_{MP_{F}} -> f_{MP_{AA}} -> e_{PIP} -> e_{MP_{F}} -> e_{MP_{AA}}$ \\ \hline
+\end{tabular}
+\end{table}
+
+Onde $f_{x_y}$ é o movimento de flexão do músculo relativo a junta x no músculo responsável por y da junta, por exemplo $f_{MP_{AA}}$ é o movimento de flexão da junta MP em movimento de adução/abdução.
+
+\subsection{Movimento de uma Junta}
+A primeira validação é feita em cima da movimentação de apenas uma junta, pela sequência determinada na tabela \ref{tabela_seq_uma}. Para simplificação e coerência com o resto das análises feitas no projeto, esta validação foi feita em cima do dedo anelar. Então, para a movimentação de apenas uma junta foi utilizado como input do modelo de ativação muscular os níveis de atuação descritos na figura \ref{ativacao_musculos}. Os resultados do modelo de ativação muscular (os ângulos das articulações) alimentam o modelo de cinemática direta da mão, como proposto em \ref{simulacao_mao}. Estes foram utilizados para movimentar a articulação PIP, pois, por motivos visuais e experimentais ela é a melhor articulação para mostrar os resultados do modelo. Como a articulação DIP se move em função da PIP, fica visível a relação entre os movimentos. A movimentação do dedo anelar para a entrada da figura \ref{ativacao_musculos} está descrita na figura \ref{movimentacao_uma_junta}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/sim_uma_junta.png}
+\caption[Simulação do Movimento de uma Junta]{Simulação do Movimento de uma Junta}
+\label{movimentacao_uma_junta}
+\end{figure}
+
+É possível notar na linha de cima da figura \ref{movimentacao_uma_junta} o movimento de flexão da junta PIP, que por consequência também movimenta a junta DIP, e na linha de baixo está o movimento de extensão da junta PIP.
 
 \subsection{Movimento Completo}
+Como descrito na tabela \ref{tabela_sequencia_movimentos}, para a validação do movimento completo irão ser feitas duas sequências de movimentos envolvendo todos os músculos do dedo anelar modelado neste projeto.
+
+Para a primeira simulação, a fim de executar a sequência 1, foram destacados os seguintes níveis de ativação, descritos na figura \ref{niveis_atuacao_simulacao}. Primeiramente é feito uma sequência de flexão e extensão nos músculos da junta PIP, e então uma sequência de flexão e extensão nos músculos da junta MP em movimento de flexão, e finalmente uma sequência de flexão e extensão nos músculos da junta MP em movimento de adução/abdução.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/niveis_simulacao.png}
+\caption[Níveis de Atuação Utilizados em cada Músculo na Simulação Completa do Movimento do Dedo Anelar para a Sequência 1]{Níveis de Atuação Utilizados em cada Músculo na Simulação Completa do Movimento do Dedo Anelar para a Sequência 1}
+\label{niveis_atuacao_simulacao}
+\end{figure}
+
+Na figura \ref{simulacao_sequencia_1}, é possível notar a sequência de movimentos determinada pela sequência 1. Um músculo flexiona e extende, e então o próximo músculo dá continuidade no movimento fazendo a mesma repetição. Lembra-se que a amplitude dos movimentos é diferente pois, conforme as restrições descritas em \ref{anatomia_mao} e o MJG de cada falange, o range de atuação de cada articulação é diferente.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/simulacao_sequencia_1.png}
+\caption[Sequência 1 de Movimentos para o Dedo Anelar]{Sequência 1 de Movimentos para o Dedo Anelar}
+\label{simulacao_sequencia_1}
+\end{figure}
+
+Para a segunda simulação, a fim de executar a sequência 2, foram destacados os níveis de atuação descritos na figura \ref{niveis_atuacao_simulacao2}. Nesta simulação a sequência de movimento consiste em fazer o movimento de flexão em todos os músculos e então o movimento de extensão em todos eles, seguindo a ordem de músculos: PIP, MP flexão e MP adução/abdução.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/niveis_simulacao2.png}
+\caption[Níveis de Atuação Utilizados em cada Músculo na Simulação Completa do Movimento do Dedo Anelar para a Sequência 2]{Níveis de Atuação Utilizados em cada Músculo na Simulação Completa do Movimento do Dedo Anelar para a Sequência 2}
+\label{niveis_atuacao_simulacao2}
+\end{figure}
+
+Na figura \ref{simulacao_sequencia_2}, é possível notar o comportamento dos músculos. Mesmo alterando a sequência eles continuam agindo conforme o esperado. Os ângulos das juntas PIP e DIP se movem em conjunto e nesta sequência de movimentos a ponta do dedo chega mais perto do que seria representado como a palma da mão. Isto demonstra como diferentes sequências de movimentos podem fazer o dedo atingir posições distintas e distâncias diferentes em relação ao eixo principal.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 1\textwidth]{img/simulacao_sequencia_2.png}
+\caption[Sequência 2 de Movimentos para o Dedo Anelar]{Sequência 2 de Movimentos para o Dedo Anelar}
+\label{simulacao_sequencia_2}
+\end{figure}

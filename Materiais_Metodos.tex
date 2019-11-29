@@ -255,4 +255,11 @@ Este modelo prevê a atuação de uma unidade motora, e como dito anteriormente 
 \label{modelo_simulink_macro}
 \end{figure}
 
-Existe um nível de atuação para cada músculo pois neste projeto a atuação dos músculos é feita em etapas de avanço e recuo, logo iremos seguir um fluxo de repouso, flexão, extensão para todas as juntas dos dedos (MP, PIP e DIP), a fim de mostrar passo a passo a movimentação do dedo. A partir deste modelo obtemos os ângulos das articulações que são utilizados na simulação da mão humana como inputs para o modelo cinemático da mão nas matrizes de DH, como descrito na seção \ref{simulacao_mao}. 
+Existe um nível de atuação para cada músculo pois neste projeto a atuação dos músculos é feita em movimentos de flexão e extensão, como demonstrado por \cite{oliveira2016modelagem} na figura \ref{movimentos_mao}, logo iremos seguir um fluxo, descrito em \ref{resultado_simulacao}, composto de repouso, flexão, extensão para todas as juntas dos dedos (MP, PIP e DIP), a fim de mostrar passo a passo a movimentação do dedo. A partir deste modelo obtemos os ângulos das articulações que são utilizados na simulação da mão humana como inputs para o modelo cinemático da mão nas matrizes de DH, como descrito na seção \ref{simulacao_mao}. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.8\textwidth]{img/Oliveira_Movimentos.jpg}
+\caption[Movimentos dos Dedos \cite{oliveira2016modelagem}]{Movimentos dos Dedos}
+\label{movimentos_mao}
+\end{figure}
